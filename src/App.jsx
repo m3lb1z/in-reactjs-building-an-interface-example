@@ -2,11 +2,25 @@ import { FaArchive } from "react-icons/fa";
 import "./App.css";
 import AddAppointment from "./components/AddAppointment";
 import Search from "./components/Search";
-import appointmentList from "./data.json";
-import { BiTrash } from "react-icons/bi";
 import AppointmentInfo from "./components/AppointmentInfo";
+import { useCallback, useEffect, useState } from "react";
 
 function App() {
+  const [appointmentList, setAppointmentList] = useState([]);
+
+  const fetchData = useCallback(() => {
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setAppointmentList(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log("useEffect");
+    fetchData();
+  }, [fetchData]);
+
   return (
     <>
       <div className="App container mx-auto mt-3 font-thin">
